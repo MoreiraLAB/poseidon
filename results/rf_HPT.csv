@@ -1,7 +1,0 @@
-parameter_name,best_result
-n_estimators,50
-criterion,squared_error
-max_depth,50
-min_samples_split,3
-min_samples_leaf,3
-min_weight_fraction_leaf,0.0

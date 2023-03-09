@@ -1,4 +1,0 @@
-parameter_name,best_result
-penalty,l2
-alpha,1e-05
-learning_rate,adaptive

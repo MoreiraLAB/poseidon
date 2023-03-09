@@ -1,9 +1,0 @@
-parameter_name,best_result
-n_estimators,50
-max_depth,10
-max_leaves,10
-learning_rate,None
-booster,dart
-alpha,1
-lambda,3
-gamma,0
