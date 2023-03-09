@@ -1,0 +1,7 @@
+parameter_name,best_result
+n_estimators,10
+criterion,friedman_mse
+max_depth,100
+min_samples_split,10
+min_samples_leaf,7
+min_weight_fraction_leaf,0.0

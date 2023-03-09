@@ -1,0 +1,4 @@
+parameter_name,best_result
+kernel,rbf
+C,1.5
+gamma,scale

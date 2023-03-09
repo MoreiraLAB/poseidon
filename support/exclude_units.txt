@@ -1,0 +1,22 @@
+% Absorbance relative to peptide 1 (405 nm)
+% Cellular uptake
+pmol/mg protein Cellular uptake
+Uptake (pmol/mg)
+% Cellular uptake (Controlo positivo)
+% R9 Cellular uptake 
+Relative Cellular uptake
+Plasma insulin concentration (uU/mL)
+% Transfection
+mM Intracellular concentration
+% Brain uptake efficiency (% of total peptide i. p. injection of VIP-TAT
+relative uptake
+Fold increase
+Fold increase 
+% Positive cells
+count
+cellular uptake of L-DOX
+drug transport
+RLU/mg protein
+% Average transfection efficiency
+% Relative fluorescence intensity
+na

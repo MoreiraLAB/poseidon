@@ -1,0 +1,130 @@
+raw_name;matching_name;true_match
+A375 cells;A375;1
+A375-R cells;A375;0
+MSTO cells;MSTO-211H;0
+MSTO-R cells;MSTO-211H;0
+9L cells;42-MG-BA;0
+9L-R cells;42-MG-BA;0
+LN18 cells;LN-18;1
+U87 cells;U-87-MG;0
+HeLa cells;HeLa;1
+CHO-K1 cells;Caov-3;0
+pgsA-745 cells;Caov-3;0
+MCF7 cells;MCF7;1
+MCF-7 cells;MCF7;1
+HepG2 cells;C3A;0
+HEK-293T cell;769-P;0
+A549 cells;A549;1
+CHO-K1 cells ;Caov-3;0
+D54 cells;42-MG-BA;0
+U251 cells;U251;1
+HCT 116 cells;HCT-116;1
+HT-29 cells;HT-29;1
+A549 cells ;A549;1
+EJ cells;AN3-CA;0
+SV-HUC-1 cells;JAR;0
+MonoMac6 cells;KY821;0
+HEK293 cells;769-P;0
+HaCaT cells;451Lu;0
+HEK-293 T-cell;769-P;0
+RAW264.7 cells;KY821;0
+BCECs cells;BE2-M17;0
+MDA-MB-231 cells;MDA-MB-231;1
+Jurkat;Jurkat;1
+NIH-3T3;HT-1080;0
+HeLa;HeLa;1
+CHO;Caov-3;0
+RAW 264.7;KY821;0
+U373MG cells;42-MG-BA;0
+A549;A549;1
+DU-145;DU-145;1
+MCF-7;MCF7;1
+K562 cells;K-562;1
+HeLa or TM12 cells;HeLa;1
+ECV-304;T24;0
+CHO K1;Caov-3;0
+SK-OV-3;SK-OV-3;1
+Human keratinocyte (HaCaT) cell;451Lu;0
+human cervical cancer HeLa;human cervical cancer HeLa;0
+Human prostate adenocarcinoma cells (PC-3);PC-3;1
+Human prostate carcinoma cells (LNCaP);22RV1;0
+human embryonic lung fibroblasts (MRC-9);A427;0
+human spleen fibroblasts (Hs 697.Sp);YT;0
+HEK293T cells;769-P;0
+Jurkat E6.1 leukemia cells;Jurkat;0
+Ovcar-3 cells;Caov-3;0
+Caco-2 cells;C2BBe1;0
+LNCaP;22RV1;0
+MCF-7 as Hpn-expressing cells;MCF7;0
+PC-3;PC-3;1
+HaCaT as Hpn-non-expressing cells;451Lu;0
+HepG2;C3A;0
+KG1a cells;KG-1;1
+Pluripotent mouse mesenchymal progenitor cell line (C3H10T1/2);A2780;0
+Undifferentiated malignant glioma rat (F98) cell line;42-MG-BA;0
+mouse embryonic fibroblast 3T3;A2780;0
+HEp-2;HeLa;0
+Vero;769-P;0
+Cos-7 cells;769-P;0
+SK-OV-3 cells;SK-OV-3;1
+CHO-K1;Caov-3;0
+Rat basophilic leukemia RBL-2H3 cells;KY821;0
+K-562;K-562;1
+primary culture of human corneal epithelial cells;0;0
+HT29;HT-29;1
+HCT116;HCT-116;1
+Plant cells;0;0
+Jurkat E6 cells;Jurkat;0
+Bone marrow dendritic cells;ARH-77;0
+MEF cells;0;0
+Cultured Human Dental Pulp Stem Cells (hDPSCs);0;0
+ARPE-19;0;0
+CHO wt;Caov-3;0
+CHO pgsB-618 cells;Caov-3;0
+U373 MG cells;U251;1
+U251-MG;U251;1
+The HeLa cells;HeLa;1
+NHDF;A388;0
+Many Human neoplastic cells including HeLa;HeLa;0
+Lovo;C2BBe1;0
+U2OS;U-2-OS;1
+K562;K-562;0
+Caco-2 cell culture;C2BBe1;0
+PC3;PC-3;1
+U87;U-87-MG;1
+Saos-2 cells;Saos-2;1
+HEK293;769-P;0
+eGFP HeLa 654;HeLa;0
+MDA-MB-231;MDA-MB-231;1
+MCF7;MCF7;1
+NCI/ADR;A2780;0
+P. falciparum-infected erythrocytes;0;0
+DC2.4 cells;0;0
+CCRF-CEM;CCRF-CEM;1
+HDF cells;A388;0
+hDPSC cells;0;0
+PK15 cells;769-P;0
+3T3 cells;A2780;0
+bEnd.3 cell;BE2-M17;0
+PC3 cells;PC-3;1
+MCF-7 cel;MCF7;1
+HCT116 cells;HCT-116;1
+Caski cells;Ca-Ski;1
+TDA cells;0;0
+MDA-MB-435S cells;SK-MEL-1;0
+MM96L cells;A101D;0
+3T3-L1 cells;A101D;0
+HBMEC cells;BE2-M17;0
+ human endothelial cells;0;0
+MCF-7/Adr cells;MCF7;1
+ECV304 cells;CAL-29;0
+U87MG cells;U-87-MG;1
+A2780 cells;A2780;1
+NIH-3T3 fibroblast cells;A2780;0
+Murine H2k mdx myoblasts;0;0
+C2C12 cells;0;0
+Cal 27;0;0
+BMDC;A549;1
+HSC-T6;C3A;1
+BV2;0;0
+MCF7.00;MCF7;1

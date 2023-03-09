@@ -1,0 +1,39 @@
+HPLC-analysis (and CLSM)
+ELISA
+Confocal laser scanning system (clss)
+Quantitative uptake assay
+Trichloroacetic acid (TCA) precipitation assay. Radioactivity associated with the supernatant and with the pellet was measured using a gamma counter
+HPLC–MS assay
+na
+MALDI-TOF
+Live-cell confocal microscopy
+laser confocal microscopy
+Gamma-well counter
+HPLC–MS assay
+125I-proteins were detected using a ?-counter. total cell protein was determined by performing the micro-BCA assay with a Pierce micro-BCA assay kit
+125I-proteins were detected using a gamma-counter. total cell protein was determined by performing the micro-BCA assay with a Pierce micro-BCA assay kit
+Immunocytochemistry
+MALDI-TOF MS
+High-performance liquid chromatograph. photodiode array detector and autosampler
+Functional gene assay
+PierceTM Micro BCATM protein assay
+CLSM
+Analyzed for radioactivity using a Gamma counter
+HCS analysis
+Confocal microscopy
+Multi-detection microplate reader
+in vivo optical imager
+In vitro radio-internalisation assays
+FT-IR
+Meta Morph software
+cytotoxicity analysis
+STEM
+confocal laser scanning microscope
+BCARS Imaging
+confocal microscopy
+Laser Confocal Scanning Microscopy
+Immunohistochemistry
+FT-IR 
+ cytotoxicity analysis
+HPLC–MS assay
+Quantitative Western blot analysis
