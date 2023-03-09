@@ -30,11 +30,11 @@ POSEIDON usage will require both Python and R packages, it is advisable the usab
 5. poseidon_peptides_features.py - add features to the peptide sequences
 6. poseidon_process_gdsc.py - process GDSC data to yield usable features
 7. poseidon_feature_processing.py - process the features to remove 0 variance, as well as the target to log10, and outliers
-8.
-	A - poseidon_ML_HPT.py - HyperParameterTuning for Machine Learning parameters, involving non-Deep Learning models
+8. <br>
+	A - poseidon_ML_HPT.py - HyperParameterTuning for Machine Learning parameters, involving non-Deep Learning models<br>
 	B - poseidon_DL_HPT.py - HyperParameterTuning for Deep Learning parameters, for forked and regular Deep Learning models
-9.
-	A - poseidon_ML_final.py  - Run the final prediction models, saving them, by fetching the best parameters from the previously ran Ray tune
+9. <br>
+	A - poseidon_ML_final.py  - Run the final prediction models, saving them, by fetching the best parameters from the previously ran Ray tune <br>
 	B - poseidon_DL_final.py - Run the final prediction models, saving them, by fetching the best parameters from the previously ran Ray tune
 
 ## Webserver
