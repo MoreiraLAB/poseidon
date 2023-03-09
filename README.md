@@ -8,7 +8,7 @@ To address these problems, we developed POSEIDON, a novel up-to-date open-access
 
 ## Installation
 
-POSEIDON usage will require both Python and R packages, it is advisable the usable of an environment to install the following software.
+POSEIDON usage will require both Python and R packages, it is advisable the usage of an environment to install the following software.
 
 - Python 3.10.8
 	- `pip install numpy==1.24.1 pandas==1.5.2 scikit-learn==1.2.0 xgboost==1.7.3 tensorflow==2.11.0`
@@ -27,7 +27,7 @@ POSEIDON usage will require both Python and R packages, it is advisable the usab
 2. `poseidon_process.py` - script to generate the file for feature extraction
 3. `poseidon_main.py` - feature extraction from peptidic sequence
 4. `poseidon_merge_curated.py` - merge the previously curated datasets with the standard sequences and identify position anomalies
-5. `poseidon_peptides_features.py` - add features to the peptide sequences
+5. `poseidon_peptides_features.py` - add features to the peptide sequences. Please note that at this point the samples were manually curated, as such, it is not possible to run the scripts without the manually curated files.
 6. `poseidon_process_gdsc.py` - process GDSC data to yield usable features
 7. `poseidon_feature_processing.py` - process the features to remove 0 variance, as well as the target to log10, and outliers
 8. \
