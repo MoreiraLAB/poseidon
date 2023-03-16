@@ -3,12 +3,13 @@
 
 ## Description
 
-Cell-penetrating peptides (CPPs) are a class of peptides usually characterized by short amino acid sequences (4-40 residues), versatility, modifiability, and effectiveness at delivering coupled therapeutic cargo into cells. CPPs sequences must be specifically designed for each use case to improve their internalization and reduce possible adjacent toxicities. In vivo/in vitro testing of different CPPs can be laborious and expensive, which has led to interest in computational approaches as faster and cheaper methods for CPP design and uptake prediction. However, no CPP-based database that provides quantitative and measurable data is currently available. Consequently, most ML models developed to date focus on classification problems rather than regression problems, as there is a lack of informative quantitative values. \
-To address these problems, we developed POSEIDON, a novel up-to-date open-access curated database and predictor that provides quantitative uptake value data and contains the most recent data from the literature. POSEIDON summarizes the available experimental quantitative data and physicochemical property data for the 2371 observations, furthermore, it makes available a processed dataset that was thoroughly screened both programatically and manually. Each observation provides information on a CPP, such as peptide name, PubMed ID, cargo, cell line, cellular uptake values, units, experimental conditions (concentration, temperature, and incubation time), methodology, and peptide sequence. The final best ML predictors reach a Pearson correlation of 0.87, Spearman correlation of 0.88 and r2 score of 0.76.
+Cell-penetrating peptides (CPPs) are a class of peptides usually characterized by short amino acid sequences (4-40 residues), versatility, modifiability, and effectiveness in delivering coupled therapeutic cargo into cells. CPPs sequences must be specifically designed for each use case to improve internalization and reduce adjacent toxicity. In vivo/in vitro testing of different CPPs can be laborious and expensive, which has led to interest in computational methodologies such as Machine Learning (ML) approaches as faster and cheaper methods for CPP design and uptake prediction. Most ML models developed to date focus on classification rather than regression techniques, as there is a lack of informative quantitative values, and relevant information such as incubation conditions, cell line properties, and sequence substitution is usually disregarded.
+To address these problems, we developed POSEIDON, a novel up-to-date open-access curated database and predictor that provides quantitative uptake value data and contains the most recent data from literature. POSEIDON summarizes the available experimental quantitative data and physicochemical property data for the 2371 observations, and makes available a processed benchmark dataset with 1263 samples that were thoroughly screened for ML purposes using both programmatic and manual methods. The processed version of the dataset was used to predict peptide-cell line transfection. The final best predictors reached a Pearson correlation of 0.87, Spearman correlation of 0.88, and r2 score of 0.76, on an independent test set.
+
 
 ## Installation
 
-POSEIDON usage will require both Python and R packages, it is advisable the usage of an environment to install the following software.
+POSEIDON requires both Python and R packages, and it is advisable to use an environment to install the following software:
 
 - Python 3.10.8
 	- `pip install numpy==1.24.1 pandas==1.5.2 scikit-learn==1.2.0 xgboost==1.7.3 tensorflow==2.11.0`
@@ -27,7 +28,7 @@ POSEIDON usage will require both Python and R packages, it is advisable the usag
 2. `poseidon_process.py` - script to generate the file for feature extraction
 3. `poseidon_main.py` - feature extraction from peptidic sequence
 4. `poseidon_merge_curated.py` - merge the previously curated datasets with the standard sequences and identify position anomalies
-5. `poseidon_peptides_features.py` - add features to the peptide sequences. Please note that at this point the samples were manually curated, as such, it is not possible to run the scripts without the manually curated files.
+5. `poseidon_peptides_features.py` - aadd features to peptide sequences. Please note that, at this point, the samples were manually curated; as such, it is not possible to run the scripts without manually curated files.
 6. `poseidon_process_gdsc.py` - process GDSC data to yield usable features
 7. `poseidon_feature_processing.py` - process the features to remove 0 variance, as well as the target to log10, and outliers
 8. \
@@ -39,7 +40,8 @@ POSEIDON usage will require both Python and R packages, it is advisable the usag
 
 ## Webserver
 
-The [Poseidon webserver](http://www.moreiralab.com/resources/poseidon/) is a powerful tool that allows dynamic visualization of the data (**Analysis** section), querying of both the raw and processed database (**Database**) as well as submitting an input peptide with multiple optional specifications (**Home** section). 
+The [Poseidon webserver](http://www.moreiralab.com/resources/poseidon/) is a powerful tool that allows dynamic visualization of the data (**Analysis** section), querying of both the raw and processed database (**Database**), and submission of an input peptide with multiple optional specifications  (**Home** section). 
+
 
 ## Please cite
 
