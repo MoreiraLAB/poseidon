@@ -27,7 +27,7 @@ POSEIDON requires both Python and R packages, and it is advisable to use an envi
 2. `poseidon_process.py` - script to generate the file for feature extraction
 3. `poseidon_main.py` - feature extraction from peptidic sequence
 4. `poseidon_merge_curated.py` - merge the previously curated datasets with the standard sequences and identify position anomalies
-5. `poseidon_peptides_features.py` - aadd features to peptide sequences. Please note that, at this point, the samples were manually curated; as such, it is not possible to run the scripts without manually curated files.
+5. `poseidon_peptides_features.py` - add features to peptide sequences. Please note that, at this point, the samples were manually curated; as such, it is not possible to run the scripts without manually curated files.
 6. `poseidon_process_gdsc.py` - process GDSC data to yield usable features
 7. `poseidon_feature_processing.py` - process the features to remove 0 variance, as well as the target to log10, and outliers
 8. \
