@@ -97,7 +97,7 @@ class peptide:
 			row_features.append(aa_df)
 		row_features_dataframe = pd.concat(row_features, axis = 1)
 		return row_features_dataframe
-
+# Example usage
 #peptide_object = peptide("AAWWSGAC")
 #peptide_object.fetch_R_peptides()
 #print(peptide_object.R_features)
