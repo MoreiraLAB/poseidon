@@ -4,6 +4,22 @@ on:
   push:
     branches:
       - pipeline-validation
+    paths:
+      - "poseidon_process.py"
+      - "poseidon_merge_curated.py"
+      - "poseidon_process_gdsc.py"
+      - "poseidon_peptides_features.py"
+      - "poseidon_feature_processing.py"
+      - "poseidon_main.py"
+      - "poseidon_functions.py"
+      - "poseidon_variables.py"
+      - "support/**"
+      - "data/CPP_SN3_dataset.csv"
+      - "data/curated_dataset.csv"
+      - "data/PANCANCER_Genetic_features_Tue_Jan_24_17_09_21_2023.csv"
+      - "environment.yml"
+      - "scripts/validate_historical_pipeline.py"
+      - ".github/workflows/pipeline-validation.yml"
   workflow_dispatch:
 
 permissions:

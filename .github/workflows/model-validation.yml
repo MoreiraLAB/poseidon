@@ -1,0 +1,101 @@
+name: Final model validation
+
+on:
+  push:
+    branches:
+      - pipeline-validation
+    paths:
+      - "poseidon_ML_final.py"
+      - "poseidon_DL_final.py"
+      - "poseidon_functions.py"
+      - "poseidon_variables.py"
+      - "environment.yml"
+      - "scripts/validate_models.py"
+      - ".github/workflows/model-validation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: poseidon-model-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  historical-artifacts:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Verify historical deployed model identities
+        run: |
+          git show 210c95cff2bb8b01fdf1e43bd2d98a887fdaf60f:models/xgb.h5 > /tmp/xgb.h5
+          git show 210c95cff2bb8b01fdf1e43bd2d98a887fdaf60f:models/DL_model.h5 > /tmp/DL_model.h5
+          echo "Historical model SHA256:"
+          sha256sum /tmp/xgb.h5 /tmp/DL_model.h5
+          test "$(sha256sum /tmp/xgb.h5 | awk '{print $1}')" = "f9bfa449c7654f8a238e87bf155a006df8758f790f96624a4716b7bda0137471"
+          test "$(sha256sum /tmp/DL_model.h5 | awk '{print $1}')" = "649051293d2072956aa3806d79bfe97caad7d6b91b9137a81036f9c0a077e9f7"
+
+  ml-final:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 90
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          activate-environment: poseidon
+          environment-file: environment.yml
+          auto-activate-base: false
+          miniforge-version: latest
+          use-mamba: true
+      - name: Restore exact historical model inputs
+        run: |
+          mkdir -p results models
+          for f in train_features.csv test_features.csv train_target.csv test_taget.csv; do
+            git show 210c95cff2bb8b01fdf1e43bd2d98a887fdaf60f:data/$f > data/$f
+          done
+          for f in linear_HPT.csv svm_HPT.csv sgd_HPT.csv knn_HPT.csv dt_HPT.csv rf_HPT.csv etr_HPT.csv xgb_HPT.csv; do
+            git show 210c95cff2bb8b01fdf1e43bd2d98a887fdaf60f:results/$f > results/$f
+          done
+      - name: Train final classical ML models
+        run: python poseidon_ML_final.py
+      - name: Validate ML models against historical metrics
+        run: python scripts/validate_models.py ml
+
+  dl-final:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 120
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          activate-environment: poseidon
+          environment-file: environment.yml
+          auto-activate-base: false
+          miniforge-version: latest
+          use-mamba: true
+      - name: Restore exact historical model inputs
+        run: |
+          mkdir -p results models
+          for f in train_features.csv test_features.csv train_target.csv test_taget.csv; do
+            git show 210c95cff2bb8b01fdf1e43bd2d98a887fdaf60f:data/$f > data/$f
+          done
+          git show 210c95cff2bb8b01fdf1e43bd2d98a887fdaf60f:results/DL_HPT.csv > results/DL_HPT.csv
+          git show 210c95cff2bb8b01fdf1e43bd2d98a887fdaf60f:results/forked_DL_HPT.csv > results/forked_DL_HPT.csv
+      - name: Train final deep-learning models
+        env:
+          TF_DETERMINISTIC_OPS: "1"
+        run: python poseidon_DL_final.py
+      - name: Validate DL outputs
+        run: python scripts/validate_models.py dl
