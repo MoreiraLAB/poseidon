@@ -1,0 +1,11 @@
+numpy==1.24.1
+pandas==1.5.2
+scikit-learn==1.2.0
+xgboost==1.7.3
+tensorflow==2.11.0
+ray[tune]==2.2.0
+pyarrow==11.0.0
+tune-sklearn
+scikit-optimize
+rpy2
+scipy
