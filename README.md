@@ -1,113 +1,136 @@
 # POSEIDON
 
-*Peptidic Objects SEquence-based Interaction with cellular DOmaiNs*
+[![DOI](https://img.shields.io/badge/DOI-10.1186%2Fs13321--024--00810--7-blue)](https://doi.org/10.1186/s13321-024-00810-7)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![R](https://img.shields.io/badge/R-3.6.1-blue)
 
-POSEIDON is a curated cell-penetrating peptide (CPP) database and a machine-learning framework for quantitative prediction of peptide uptake across cell lines.
+**POSEIDON — Peptidic Objects SEquence-based Interaction with cellular DOmaiNs**
 
-The published study reports a database of **2,371 entries**, a final modelling benchmark of **1,263 samples**, and a **1,330-feature** representation combining experimental conditions, cargo, sequence descriptors, physicochemical properties, positional sequence encoding, genomic features, and anomalous-position features.
+POSEIDON is an open database and machine-learning framework for quantitative prediction of cell-penetrating peptide (CPP) uptake across cell lines.
 
-## Scientific reference
+The published resource contains **2,371 experimentally curated entries**. The final modelling benchmark contains **1,263 samples** represented by **1,330 features** integrating experimental conditions, cargo, peptide sequence, physicochemical descriptors and cell-line genomic information.
 
-Preto AJ, Caniceiro AB, Duarte F, Fernandes H, Ferreira L, Mourão J, Moreira IS.  
-**POSEIDON: Peptidic Objects SEquence-based Interaction with cellular DOmaiNs: a new database and predictor.**  
-*Journal of Cheminformatics* **16**, 18 (2024).  
-DOI: **10.1186/s13321-024-00810-7**
+## Key features
 
-Citation metadata are also provided in `CITATION.cff`.
+- curated quantitative CPP uptake database;
+- peptide physicochemical and sequence descriptors;
+- experimental-condition and cargo features;
+- cell-line genomic features;
+- classical machine-learning and deep-learning regression models;
+- XGBoost and deep-learning models used for quantitative uptake prediction;
+- data-processing, hyperparameter-tuning and final-training scripts.
 
-## Repository scope
+## Installation
 
-This repository contains the **scientific code, data, feature definitions, and supporting artefacts** associated with the published POSEIDON workflow.
+POSEIDON was developed with Python 3.10 and R 3.6.1.
 
-It intentionally does **not** contain the production web application, HTML templates, CSS/JavaScript assets, deployment configuration, user uploads, e-mail configuration, or server logs.
+### Python
 
-## Reproducibility status
+```bash
+git clone https://github.com/MoreiraLAB/poseidon.git
+cd poseidon
 
-The historical scientific pipeline is preserved for provenance, but the repository should not yet be interpreted as a fully portable `clone -> retrain -> reproduce` package.
+python3.10 -m venv .venv
+source .venv/bin/activate
 
-Known limitations include:
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
 
-- historical machine-specific paths in `poseidon_variables.py`;
-- manually curated intermediate inputs that are not all versioned in the repository;
-- final deployed model binaries are not stored in Git history;
-- the historical dependency list is documented below, but a fully validated lockfile/conda environment is not yet available;
-- some historical comments state “1360 features”, while the published and checked feature schema contains **1,330**.
+### R
 
-Detailed notes are in [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md).
+Install R 3.6.1 and the packages used to calculate peptide descriptors:
 
-### Repository self-check
+```r
+install.packages(c("Rcpp", "Peptides", "reshape2"),
+                 repos = "https://cran.rstudio.com")
+```
 
-A lightweight, dependency-free integrity check validates the published repository contract:
+If R is installed outside the default system location, set `R_HOME` before running the feature-extraction scripts.
+
+## Repository check
+
+A lightweight integrity check is included:
 
 ```bash
 python scripts/repository_self_check.py
 ```
 
-It checks, among other things:
+It verifies the published database size, the 1,330-feature schema, the cell-line table and the identity of the published scaler.
 
-- 2,371 rows in `data/CPP_dataset.csv`;
-- 1,330 unique feature names in `support/features_header.txt`;
-- 42 rows in the deployment cell-line/tissue table;
-- the SHA256 identity of the published `support/scaler.pkl`;
-- absence of web/deployment code from the scientific repository.
+## Data
 
-## Historical software stack
+Important files include:
 
-The original workflow was developed with the following software versions:
+| File | Description |
+|---|---|
+| `data/CPP_dataset.csv` | Published POSEIDON CPP database |
+| `data/GDSC_features.csv` | Processed genomic features used by POSEIDON |
+| `support/features_header.txt` | Final 1,330-feature schema |
+| `support/scaler.pkl` | StandardScaler used by the published model |
+| `support/Peptides_deployment.R` | Peptide physicochemical descriptor definitions |
+| `support/cell_line_name_encoder.csv` | Experimental-to-GDSC cell-line mapping |
+| `support/cell_line_tissue_table.csv` | Cell-line/tissue mapping |
 
-- Python 3.10.8
-  - NumPy 1.24.1
-  - pandas 1.5.2
-  - scikit-learn 1.2.0
-  - XGBoost 1.7.3
-  - TensorFlow 2.11.0
-  - Ray Tune 2.2.0
-  - PyArrow 11.0.0
-  - tune-sklearn
-  - scikit-optimize
-  - rpy2
-- R 3.6.1
-  - Rcpp
-  - Peptides
-  - reshape2
-
-These versions document the historical environment; they are **not yet claimed as a fully validated portable lockfile**.
+The raw POSEIDON database contains 2,371 entries. Some training-pipeline stages use manually curated intermediate tables in addition to the files distributed here.
 
 ## Scientific workflow
 
-The historical scripts are organised as follows:
+The original scripts follow the published workflow:
 
-1. `poseidon_variables.py` — central paths and feature definitions.
-2. `poseidon_functions.py` — shared helper functions.
-3. `poseidon_process.py` — processing of the curated CPP uptake dataset.
-4. `poseidon_main.py` — peptide feature extraction.
-5. `poseidon_merge_curated.py` — merge of manually curated sequence/cargo information and sequence anomaly handling.
-6. `poseidon_peptides_features.py` — peptide, positional, and genomic feature assembly.
-7. `poseidon_process_gdsc.py` — processing of GDSC genomic features.
-8. `poseidon_feature_processing.py` — zero-variance filtering, log10 target transformation, train/test split, and scaling.
-9. `poseidon_ML_HPT.py` / `poseidon_DL_HPT.py` — hyperparameter tuning.
-10. `poseidon_ML_final.py` / `poseidon_DL_final.py` — final model training and evaluation.
+1. `poseidon_process.py` — process the CPP uptake dataset.
+2. `poseidon_main.py` — calculate peptide descriptors.
+3. `poseidon_merge_curated.py` — integrate curated sequence and cargo information.
+4. `poseidon_peptides_features.py` — assemble peptide and genomic features.
+5. `poseidon_process_gdsc.py` — process GDSC genomic data.
+6. `poseidon_feature_processing.py` — log-transform the target, remove zero-variance features, split the dataset and scale features.
+7. `poseidon_ML_HPT.py` and `poseidon_DL_HPT.py` — hyperparameter optimisation.
+8. `poseidon_ML_final.py` and `poseidon_DL_final.py` — train and evaluate the final models.
 
-Some steps depend on manual curation files and therefore cannot yet be executed end-to-end from a fresh clone without additional provenance work.
+The central paths and feature definitions are in `poseidon_variables.py`.
 
-## Data and artefacts
+## Feature representation
 
-Important versioned resources include:
+The final feature vector contains **1,330 features**:
 
-- `data/CPP_dataset.csv` — published CPP database;
-- `data/GDSC_features.csv` — processed genomic feature matrix;
-- `support/features_header.txt` — final 1,330-feature schema;
-- `support/scaler.pkl` — scaler used by the published deployment;
-- `support/Peptides_deployment.R` — peptide descriptor definitions;
-- `support/cell_line_name_encoder.csv` — mapping between experimental and genomic cell-line names;
-- `support/cell_line_tissue_table.csv` — deployment cell-line/tissue mapping.
+| Feature block | Features |
+|---|---:|
+| Experimental conditions | 8 |
+| Cargo | 62 |
+| Sequence / modifications | 18 |
+| Peptide physicochemical descriptors | 31 |
+| Positional sequence encoding | 778 |
+| Genomic features | 415 |
+| Anomalous-position features | 18 |
+| **Total** | **1,330** |
 
-## Development policy
+## Model performance
 
-The historical scripts are part of the provenance of the published model. Refactors that are intended to preserve the published model should be validated against immutable artefacts and regression tests before merge.
+On the independent test set reported in the publication, POSEIDON achieved:
 
-Changes that intentionally alter scientific outputs, training data, feature ordering, or fitted models should be developed and versioned as a **new scientific model revision**, rather than silently replacing the published baseline.
+- Pearson correlation: **0.87**
+- Spearman correlation: **0.88**
+- R²: **0.76**
+
+## Versioning
+
+The published 2024 scientific baseline is anchored to repository commit:
+
+```text
+a5c7eb7af4dda6efc5e6aea95d30701eb5c10862
+```
+
+Release tags should be used for immutable scientific baselines and future model revisions.
+
+## Citation
+
+If you use POSEIDON, please cite:
+
+> Preto AJ, Caniceiro AB, Duarte F, Fernandes H, Ferreira L, Mourão J, Moreira IS. **POSEIDON: Peptidic Objects SEquence-based Interaction with cellular DOmaiNs: a new database and predictor.** *Journal of Cheminformatics* **16**, 18 (2024). https://doi.org/10.1186/s13321-024-00810-7
+
+Citation metadata are also available in `CITATION.cff`.
 
 ## License
 
-GNU General Public License v3.0. See `LICENSE`.
+POSEIDON is distributed under the GNU General Public License v3.0. See [LICENSE](LICENSE).
