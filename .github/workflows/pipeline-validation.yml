@@ -1,0 +1,86 @@
+name: Full scientific pipeline validation
+
+on:
+  push:
+    branches:
+      - pipeline-validation
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preprocess:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 180
+    defaults:
+      run:
+        shell: bash -el {0}
+
+    steps:
+      - name: Check out full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up exact POSEIDON environment
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          activate-environment: poseidon
+          environment-file: environment.yml
+          auto-activate-base: false
+          miniforge-version: latest
+          use-mamba: true
+
+      - name: Show runtime
+        run: |
+          python --version
+          R --version | head -3
+          python - <<'PY'
+          import numpy, pandas, sklearn, scipy, xgboost, tensorflow, rpy2
+          print("numpy", numpy.__version__)
+          print("pandas", pandas.__version__)
+          print("sklearn", sklearn.__version__)
+          print("scipy", scipy.__version__)
+          print("xgboost", xgboost.__version__)
+          print("tensorflow", tensorflow.__version__)
+          print("rpy2", rpy2.__version__)
+          PY
+          Rscript -e 'cat("Peptides ", as.character(packageVersion("Peptides")), "\n", sep="")'
+          Rscript -e 'cat("Rcpp ", as.character(packageVersion("Rcpp")), "\n", sep="")'
+          Rscript -e 'cat("reshape2 ", as.character(packageVersion("reshape2")), "\n", sep="")'
+
+      - name: Repository contract
+        run: python scripts/repository_self_check.py
+
+      - name: Compile Python source
+        run: python -m py_compile poseidon_*.py scripts/*.py
+
+      - name: Stage 1 - raw CPP processing
+        run: |
+          python poseidon_process.py
+          python scripts/validate_historical_pipeline.py process
+
+      - name: Stage 2 - curated merge
+        run: |
+          python poseidon_merge_curated.py
+          python scripts/validate_historical_pipeline.py merge
+
+      - name: Stage 3 - GDSC processing
+        run: |
+          cp data/GDSC_features.csv /tmp/versioned_GDSC_features.csv
+          cp support/cell_line_tissue_table.csv /tmp/versioned_cell_line_tissue_table.csv
+          python poseidon_process_gdsc.py
+          python scripts/validate_historical_pipeline.py gdsc
+          cp /tmp/versioned_GDSC_features.csv data/GDSC_features.csv
+          cp /tmp/versioned_cell_line_tissue_table.csv support/cell_line_tissue_table.csv
+
+      - name: Stage 4 - peptide and genomic feature extraction
+        run: |
+          python poseidon_peptides_features.py
+          python scripts/validate_historical_pipeline.py features
+
+      - name: Stage 5 - feature processing, split and scaling
+        run: |
+          python poseidon_feature_processing.py
+          python scripts/validate_historical_pipeline.py processed
