@@ -1,0 +1,5 @@
+-r requirements.txt
+ray[tune]==2.2.0
+pyarrow==11.0.0
+tune-sklearn
+scikit-optimize
