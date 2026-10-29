@@ -23,7 +23,7 @@ The published resource contains **2,371 experimentally curated entries**. The fi
 
 ## Installation
 
-POSEIDON was developed with Python 3.10 and R 3.6.1.
+POSEIDON is supported here with Python 3.10 and R 3.6.1. The core Python requirements are pinned to the validated POSEIDON runtime used for the published deployment.
 
 ### Python
 
@@ -36,6 +36,12 @@ source .venv/bin/activate
 
 python -m pip install --upgrade pip
 pip install -r requirements.txt
+```
+
+For hyperparameter tuning and model-training utilities:
+
+```bash
+pip install -r requirements-training.txt
 ```
 
 ### R
@@ -121,7 +127,11 @@ The published 2024 scientific baseline is anchored to repository commit:
 a5c7eb7af4dda6efc5e6aea95d30701eb5c10862
 ```
 
-Release tags should be used for immutable scientific baselines and future model revisions.
+Recommended release tags:
+
+- `published-2024` — immutable snapshot of the published scientific baseline;
+- `v1.0.0` — first curated repository release;
+- future scientific model changes should increment the semantic version.
 
 ## Citation
 
