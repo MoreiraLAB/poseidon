@@ -106,7 +106,7 @@ def compare_scaler() -> None:
         ev = getattr(e, attr)
         if not np.allclose(av, ev, rtol=1e-12, atol=1e-12):
             raise AssertionError(f"scaler {attr} differs")
-    if int(a.n_features_in_) != int(e.n_features_in_) != 1330:
+    if int(a.n_features_in_) != 1330 or int(e.n_features_in_) != 1330:
         raise AssertionError("unexpected scaler feature count")
     print("PASS: regenerated scaler parameters match historical scaler")
 
