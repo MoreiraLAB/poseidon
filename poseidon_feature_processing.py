@@ -121,7 +121,19 @@ test_target = test_data[poseidon_variables.DATA_TARGET]
 train_features = train_data.drop(droppable_columns, axis = 1)
 test_features = test_data.drop(droppable_columns, axis = 1)
 
-#1330 features left
+# 1330 features left. Use the published feature schema as the canonical
+# deterministic order before scaling/training. The legacy upstream pipeline
+# contains set(...) operations whose iteration order is not reproducible.
+header_file_name = poseidon_variables.SUPPORT_FOLDER + poseidon_variables.SYSTEM_SEP + "features_header.txt"
+if os.path.isfile(header_file_name):
+	published_header = [
+		x.replace(poseidon_variables.PARAGRAPH_SEP, "")
+		for x in open(header_file_name).readlines()
+		if x.replace(poseidon_variables.PARAGRAPH_SEP, "")
+	]
+	if len(published_header) == len(train_features.columns) and set(published_header) == set(train_features.columns):
+		train_features = train_features[published_header]
+		test_features = test_features[published_header]
 
 #Normalise data
 from sklearn.preprocessing import StandardScaler
@@ -132,7 +144,6 @@ scaler.fit(train_features)
 pickle.dump(scaler, open(poseidon_variables.SUPPORT_FOLDER + poseidon_variables.SYSTEM_SEP + "scaler.pkl", 'wb'))
 
 
-header_file_name = poseidon_variables.SUPPORT_FOLDER + poseidon_variables.SYSTEM_SEP + "features_header.txt"
 with open(header_file_name, "w") as header_file:
 	for current_column in list(train_features):
 		header_file.write(current_column + poseidon_variables.PARAGRAPH_SEP)
