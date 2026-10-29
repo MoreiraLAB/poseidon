@@ -2,6 +2,7 @@ cff-version: 1.2.0
 message: "If you use POSEIDON, please cite the published article."
 title: "POSEIDON: Peptidic Objects SEquence-based Interaction with cellular DOmaiNs"
 type: software
+version: 1.0.0
 authors:
   - family-names: Preto
     given-names: António J.
@@ -20,6 +21,13 @@ authors:
 date-released: 2024-02-16
 doi: 10.1186/s13321-024-00810-7
 url: "https://github.com/MoreiraLAB/poseidon"
+repository-code: "https://github.com/MoreiraLAB/poseidon"
+keywords:
+  - cell-penetrating peptides
+  - peptide uptake
+  - machine learning
+  - drug delivery
+  - bioinformatics
 preferred-citation:
   type: article
   title: "POSEIDON: Peptidic Objects SEquence-based Interaction with cellular DOmaiNs: a new database and predictor"
