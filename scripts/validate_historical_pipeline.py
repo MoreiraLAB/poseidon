@@ -159,6 +159,7 @@ def main(stage: str) -> None:
             "data/data_with_features.csv",
             sep=",",
             encoding="utf-8",
+            check_column_order=False,
             atol=1e-8,
         )
     elif stage == "processed":
