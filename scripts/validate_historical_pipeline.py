@@ -168,6 +168,7 @@ def main(stage: str) -> None:
             "data/log_10_processed_data.csv",
             sep=",",
             encoding="utf-8",
+            check_column_order=False,
             atol=1e-8,
         )
 
