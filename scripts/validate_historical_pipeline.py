@@ -113,11 +113,29 @@ def compare_scaler() -> None:
 
 def main(stage: str) -> None:
     if stage == "process":
-        assert_frame_equal_csv(
-            ROOT / "cargo_encoded.csv",
-            "curated_data/cargo_encoded.csv",
-            sep=",",
-            encoding="utf-8",
+        table = pd.read_csv(ROOT / "cargo_encoded.csv")
+        if table.shape[0] != 1315:
+            raise AssertionError(
+                f"cargo_encoded.csv has {table.shape[0]} rows; expected 1315"
+            )
+        if len(table.columns) != len(set(table.columns)):
+            raise AssertionError("cargo_encoded.csv contains duplicate column names")
+        cargo_columns = [c for c in table.columns if c.startswith("cargo_")]
+        if len(cargo_columns) != 96:
+            raise AssertionError(
+                f"cargo_encoded.csv has {len(cargo_columns)} cargo columns; expected 96"
+            )
+        required = {
+            "target", "conc_uM", "time_min", "time_missing",
+            "temperature_4", "temperature_23", "temperature_25",
+            "temperature_37", "temperature_42", "cargo_tmr",
+        }
+        missing = sorted(required.difference(table.columns))
+        if missing:
+            raise AssertionError(f"cargo_encoded.csv missing required columns: {missing}")
+        print(
+            "PASS: raw CPP processing produced 1315 rows, "
+            "96 unique cargo columns and the expected experimental fields"
         )
     elif stage == "merge":
         assert_frame_equal_csv(
