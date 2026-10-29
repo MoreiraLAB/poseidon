@@ -14,7 +14,7 @@ import os
 import poseidon_variables
 import sys
 
-os.environ['R_HOME'] = poseidon_variables.R_LOCATION
+if poseidon_variables.R_LOCATION:\n\tos.environ['R_HOME'] = poseidon_variables.R_LOCATION
 
 import numpy as np
 import pandas as pd
@@ -120,7 +120,7 @@ test_target = test_data[poseidon_variables.DATA_TARGET]
 train_features = train_data.drop(droppable_columns, axis = 1)
 test_features = test_data.drop(droppable_columns, axis = 1)
 
-#1360 features left
+#1330 features left
 
 #Normalise data
 from sklearn.preprocessing import StandardScaler
