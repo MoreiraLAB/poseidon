@@ -47,7 +47,8 @@ def encoding_column(input_table, target_column, \
 		unique_columns_list = list(input_table[target_column].unique())
 
 	else:
-		unique_columns_list = possible_values
+		# Preserve feature order while avoiding duplicated declared categories.
+		unique_columns_list = list(dict.fromkeys(possible_values))
 
 	column_dictionary = {}
 
