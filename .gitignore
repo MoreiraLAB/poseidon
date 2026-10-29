@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+venv/
+env/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE / OS
+.DS_Store
+.idea/
+.vscode/
+
+# Generated POSEIDON pipeline outputs
+results/
+models/
+data/processed_dataset.csv
+data/log_10_processed_data.csv
+data/peptides.fasta
+data/data_with_features.csv
+data/train_features.csv
+data/test_features.csv
+data/train_target.csv
+data/test_target.csv
+data/train_IDs.csv
+data/test_IDs.csv
+
+# Local runtime / scratch
+*.log
+tmp/
