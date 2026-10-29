@@ -1,0 +1,46 @@
+cff-version: 1.2.0
+message: "If you use POSEIDON, please cite the published article."
+title: "POSEIDON: Peptidic Objects SEquence-based Interaction with cellular DOmaiNs"
+type: software
+authors:
+  - family-names: Preto
+    given-names: António J.
+  - family-names: Caniceiro
+    given-names: Ana B.
+  - family-names: Duarte
+    given-names: Francisco
+  - family-names: Fernandes
+    given-names: Hugo
+  - family-names: Ferreira
+    given-names: Lino
+  - family-names: Mourão
+    given-names: Joana
+  - family-names: Moreira
+    given-names: Irina S.
+date-released: 2024-02-16
+doi: 10.1186/s13321-024-00810-7
+url: "https://github.com/MoreiraLAB/poseidon"
+preferred-citation:
+  type: article
+  title: "POSEIDON: Peptidic Objects SEquence-based Interaction with cellular DOmaiNs: a new database and predictor"
+  authors:
+    - family-names: Preto
+      given-names: António J.
+    - family-names: Caniceiro
+      given-names: Ana B.
+    - family-names: Duarte
+      given-names: Francisco
+    - family-names: Fernandes
+      given-names: Hugo
+    - family-names: Ferreira
+      given-names: Lino
+    - family-names: Mourão
+      given-names: Joana
+    - family-names: Moreira
+      given-names: Irina S.
+  journal: "Journal of Cheminformatics"
+  volume: 16
+  issue: 1
+  year: 2024
+  doi: 10.1186/s13321-024-00810-7
+  url: "https://doi.org/10.1186/s13321-024-00810-7"
