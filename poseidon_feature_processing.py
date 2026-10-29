@@ -14,7 +14,7 @@ import os
 import poseidon_variables
 import sys
 
-os.environ['R_HOME'] = poseidon_variables.R_LOCATION
+if poseidon_variables.R_LOCATION:\n\tos.environ['R_HOME'] = poseidon_variables.R_LOCATION
 
 import numpy as np
 import pandas as pd
@@ -33,9 +33,9 @@ def remove_outliers(input_table, target_column, outlier_multiplier = 3, \
 	"""
 	target_mean = np.mean(input_table[target_column])
 	target_std = np.std(input_table[target_column])
-	cut_off = target_std * 3
+	cut_off = target_std * outlier_multiplier
 	lower, upper = target_mean - cut_off, target_mean + cut_off
-	started_registering, remove_indexes_list = False, []
+	started_registering, remove_indexes_list, outliers_list = False, [], []
 
 	for index, current_row in input_table.iterrows():
 		current_target = current_row[target_column]
@@ -51,7 +51,7 @@ def remove_outliers(input_table, target_column, outlier_multiplier = 3, \
 		outliers_dataframe = pd.DataFrame(outliers_list)
 		outliers_dataframe.to_csv(outliers_report_file, index = False)
 	
-	return opened_features_table.drop(remove_indexes_list)
+	return input_table.drop(remove_indexes_list)
 
 def convert_to_log10(input_table, target_column):
 
@@ -76,7 +76,7 @@ def remove_features_variance(input_table, variance_threshold = 0.0, \
 	variance_list, columns_to_drop = [], [] 
 	for current_column in input_table:
 		column_variance = input_table[current_column].var()
-		if column_variance == 0:
+		if column_variance <= variance_threshold:
 			columns_to_drop.append(current_column)
 		variance_list.append([current_column, column_variance])
 
@@ -120,7 +120,7 @@ test_target = test_data[poseidon_variables.DATA_TARGET]
 train_features = train_data.drop(droppable_columns, axis = 1)
 test_features = test_data.drop(droppable_columns, axis = 1)
 
-#1360 features left
+#1330 features left
 
 #Normalise data
 from sklearn.preprocessing import StandardScaler

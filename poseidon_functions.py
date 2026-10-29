@@ -44,7 +44,7 @@ def encoding_column(input_table, target_column, \
 	"""
 
 	if possible_values == False:
-		unique_columns_list = [input_table[target_column].unique()]
+		unique_columns_list = list(input_table[target_column].unique())
 
 	else:
 		unique_columns_list = possible_values

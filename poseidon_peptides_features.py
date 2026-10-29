@@ -14,7 +14,7 @@ import os
 import poseidon_variables
 import sys
 
-os.environ['R_HOME'] = poseidon_variables.R_LOCATION
+if poseidon_variables.R_LOCATION:\n\tos.environ['R_HOME'] = poseidon_variables.R_LOCATION
 
 import numpy as np
 import pandas as pd

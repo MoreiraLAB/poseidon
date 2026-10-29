@@ -170,7 +170,7 @@ test_features_df = pd.DataFrame(normalized_test_features, columns = opened_heade
 import copy 
 train_features_dicionary = copy.deepcopy(poseidon_variables.PLACEHOLDER_FEATURES_DICTIONARY)
 test_features_dicionary = copy.deepcopy(poseidon_variables.PLACEHOLDER_FEATURES_DICTIONARY)
-#1360 final features
+#1330 final features
 
 for current_feature_block in poseidon_variables.FEATURES_DICTIONARY:
 	feature_block_list = []
