@@ -9,6 +9,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: poseidon-pipeline-validation-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   preprocess:
     runs-on: ubuntu-22.04
@@ -55,6 +59,13 @@ jobs:
 
       - name: Compile Python source
         run: python -m py_compile poseidon_*.py scripts/*.py
+
+      - name: Restore exact historical curated inputs
+        run: |
+          git show 210c95cff2bb8b01fdf1e43bd2d98a887fdaf60f:data/CPP_SN3_dataset.csv > data/CPP_SN3_dataset.csv
+          git show 210c95cff2bb8b01fdf1e43bd2d98a887fdaf60f:data/curated_dataset.csv > data/curated_dataset.csv
+          test "$(git hash-object data/CPP_SN3_dataset.csv)" = "d31bda7c30181db3a1a8dde662b51d1b42f6b9a7"
+          test "$(git hash-object data/curated_dataset.csv)" = "f10c3291aadda1079d5e74e87e86b2a657734dd3"
 
       - name: Stage 1 - raw CPP processing
         run: |
