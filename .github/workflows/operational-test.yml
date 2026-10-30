@@ -35,7 +35,12 @@ jobs:
 
       - name: Install R packages
         run: |
-          Rscript -e 'install.packages(c("Rcpp","Peptides","reshape2"), repos="https://cloud.r-project.org")'
+          Rscript -e 'install.packages("remotes", repos="https://cloud.r-project.org")'
+          Rscript -e 'remotes::install_version("Rcpp", version="1.0.5", repos="https://cloud.r-project.org", upgrade="never")'
+          Rscript -e 'remotes::install_version("stringi", version="1.4.3", repos="https://cloud.r-project.org", upgrade="never")'
+          Rscript -e 'remotes::install_version("stringr", version="1.4.0", repos="https://cloud.r-project.org", upgrade="never")'
+          Rscript -e 'remotes::install_version("reshape2", version="1.4.3", repos="https://cloud.r-project.org", upgrade="never")'
+          Rscript -e 'remotes::install_version("Peptides", version="2.4.1", repos="https://cloud.r-project.org", upgrade="never")'
 
       - name: Install Python dependencies
         run: |
