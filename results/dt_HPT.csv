@@ -1,0 +1,8 @@
+parameter_name,best_result
+splitter,best
+criterion,friedman_mse
+max_depth,10
+min_samples_split,3
+min_samples_leaf,7
+min_weight_fraction_leaf,0.0
+max_features,auto
