@@ -22,5 +22,21 @@ jobs:
         with:
           python-version: "3.10"
 
+      - name: Compile scientific Python modules
+        run: |
+          python -m py_compile \
+            poseidon_variables.py \
+            poseidon_functions.py \
+            poseidon_process.py \
+            poseidon_main.py \
+            poseidon_merge_curated.py \
+            poseidon_peptides_features.py \
+            poseidon_process_gdsc.py \
+            poseidon_feature_processing.py \
+            poseidon_ML_HPT.py \
+            poseidon_ML_final.py \
+            poseidon_DL_HPT.py \
+            poseidon_DL_final.py
+
       - name: Validate published repository artefacts
         run: python scripts/repository_self_check.py
