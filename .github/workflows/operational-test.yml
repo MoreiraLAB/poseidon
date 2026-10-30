@@ -1,0 +1,169 @@
+name: POSEIDON operational end-to-end test
+
+on:
+  push:
+    branches:
+      - operational-recovery
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  end-to-end:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 90
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: pip
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "3.6.1"
+          use-public-rspm: true
+
+      - name: Install R packages
+        run: |
+          Rscript -e 'install.packages(c("Rcpp","Peptides","reshape2"), repos="https://cloud.r-project.org")'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Compile scientific modules
+        run: |
+          python -m py_compile \
+            poseidon_variables.py \
+            poseidon_functions.py \
+            poseidon_process.py \
+            poseidon_main.py \
+            poseidon_merge_curated.py \
+            poseidon_peptides_features.py \
+            poseidon_process_gdsc.py \
+            poseidon_feature_processing.py \
+            poseidon_ML_HPT.py \
+            poseidon_ML_final.py \
+            poseidon_DL_HPT.py \
+            poseidon_DL_final.py
+
+      - name: Validate repository baseline
+        run: python scripts/repository_self_check.py
+
+      - name: Verify restored published artefacts
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib
+
+          expected = {
+              "models/xgb.h5": "f9bfa449c7654f8a238e87bf155a006df8758f790f96624a4716b7bda0137471",
+              "models/DL_model.h5": "649051293d2072956aa3806d79bfe97caad7d6b91b9137a81036f9c0a077e9f7",
+              "support/scaler.pkl": "9df8cdd9f1fd51e46d5e7a911fb35d7c72ef19d2f8b1e5275451d763c162c5f2",
+          }
+          for name, wanted in expected.items():
+              data = Path(name).read_bytes()
+              got = hashlib.sha256(data).hexdigest()
+              print(name, got)
+              assert got == wanted, (name, got, wanted)
+          PY
+
+      - name: Stage 1 - raw CPP processing
+        run: |
+          python poseidon_process.py
+          test -s cargo_encoded.csv
+
+      - name: Stage 2 - curated merge
+        run: |
+          python poseidon_merge_curated.py
+          test -s data/processed_dataset.csv
+
+      - name: Stage 3 - GDSC processing
+        run: |
+          python poseidon_process_gdsc.py
+          test -s data/GDSC_features.csv
+          test -s support/cell_line_tissue_table.csv
+
+      - name: Stage 4 - peptide and genomic feature extraction
+        run: |
+          python poseidon_peptides_features.py
+          test -s data/data_with_features.csv
+
+      - name: Stage 5 - feature processing and split
+        run: |
+          python poseidon_feature_processing.py
+          test -s data/log_10_processed_data.csv
+          test -s data/train_features.csv
+          test -s data/test_features.csv
+          test -s data/train_target.csv
+          test -s data/test_taget.csv
+
+      - name: Validate generated feature matrix
+        run: |
+          python - <<'PY'
+          import numpy as np
+          from pathlib import Path
+
+          header = [x.strip() for x in Path("support/features_header.txt").read_text().splitlines() if x.strip()]
+          train = np.genfromtxt("data/train_features.csv", delimiter=",")
+          test = np.genfromtxt("data/test_features.csv", delimiter=",")
+          y_train = np.genfromtxt("data/train_target.csv", delimiter=",")
+          y_test = np.genfromtxt("data/test_taget.csv", delimiter=",")
+
+          print("features:", len(header))
+          print("train:", train.shape, y_train.shape)
+          print("test:", test.shape, y_test.shape)
+          print("total samples:", len(y_train) + len(y_test))
+
+          assert len(header) == 1330
+          assert train.shape[1] == 1330
+          assert test.shape[1] == 1330
+          assert len(y_train) + len(y_test) == 1263
+          PY
+
+      - name: Stage 6 - final classical ML training
+        run: |
+          python poseidon_ML_final.py
+          test -s models/xgb.h5
+          test -s results/xgb_test.csv
+
+      - name: Stage 7 - final deep-learning training
+        run: |
+          python poseidon_DL_final.py
+          test -s models/DL_model.h5
+          test -s results/DL_test.csv
+
+      - name: Summarise final metrics
+        run: |
+          echo "=== XGBoost ==="
+          cat results/xgb_test.csv
+          echo
+          echo "=== Deep Learning ==="
+          cat results/DL_test.csv
+
+      - name: Upload operational-test outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: poseidon-operational-test
+          path: |
+            cargo_encoded.csv
+            data/processed_dataset.csv
+            data/log_10_processed_data.csv
+            support/features_header.txt
+            support/scaler.pkl
+            results/*_test.csv
+            results/*_train.csv
+          if-no-files-found: ignore
+          retention-days: 7
